@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: quote-service
+  cloud:
+    config:
+      uri: http://localhost:8888/
+      fail-fast: false
+
+---
+
+spring:
+  profiles: docker
+  application:
+    name: quote-service
+  cloud:
+    config:
+      uri: http://config-server:8888/
+      fail-fast: true
+      retry:
+        max-attempts: 5
+        max-interval: 2000

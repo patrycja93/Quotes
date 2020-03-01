@@ -1,0 +1,28 @@
+version: '3'
+services: 
+    config-server:
+        build: ./QuoteConfigServer/
+        ports: 
+            - "8888:8888"
+    eureka:
+        build: ./QuoteDiscoveryServer/
+        ports: 
+            - "8761:8761"
+    quote-service:
+        build: ./QuoteService/
+        ports: 
+            - "8080:8080"
+        environment: 
+            - SPRING_PROFILES_ACTIVE=docker
+        links: 
+            - config-server
+            - eureka
+    book-service:
+        build: ./BookService/
+        ports:
+            - "8081:8081"
+        environment: 
+            - SPRING_PROFILES_ACTIVE=docker
+        links: 
+            - config-server
+            - eureka
